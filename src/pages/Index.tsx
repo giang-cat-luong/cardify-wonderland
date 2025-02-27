@@ -1,6 +1,5 @@
 
 import { Bell, Search } from "lucide-react";
-import Link from "next/link";
 
 const Index = () => {
   return (
@@ -8,41 +7,41 @@ const Index = () => {
       {/* Sidebar */}
       <div className="w-64 bg-white border-r border-gray-200 flex flex-col">
         <div className="p-4 border-b border-gray-200">
-          <Link href="/" className="flex items-center">
+          <a href="/" className="flex items-center">
             <img src="/lovable-uploads/7b9dbbbb-fd46-4bbc-ab15-6b26036d247f.png" alt="Logo" className="h-8" />
-          </Link>
+          </a>
         </div>
         
         <nav className="flex-1 p-4">
           <div className="space-y-1">
-            <Link href="#" className="flex items-center px-3 py-2 text-sm font-medium text-blue-600 bg-blue-50 rounded-lg">
+            <a href="#" className="flex items-center px-3 py-2 text-sm font-medium text-blue-600 bg-blue-50 rounded-lg">
               Tổng quan
-            </Link>
-            <Link href="#" className="flex items-center px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">
+            </a>
+            <a href="#" className="flex items-center px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">
               Quản lý dự án
-            </Link>
-            <Link href="#" className="flex items-center px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">
+            </a>
+            <a href="#" className="flex items-center px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">
               Thông kê tài khoản
-            </Link>
-            <Link href="#" className="flex items-center px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">
+            </a>
+            <a href="#" className="flex items-center px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">
               Dịch vụ của tôi
-            </Link>
-            <Link href="#" className="flex items-center px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">
+            </a>
+            <a href="#" className="flex items-center px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">
               Rút tiền freelancer
-            </Link>
-            <Link href="#" className="flex items-center px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">
+            </a>
+            <a href="#" className="flex items-center px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">
               Phần thưởng Fastlance
-            </Link>
+            </a>
           </div>
         </nav>
 
         <div className="p-4 border-t border-gray-200">
-          <Link href="#" className="flex items-center px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">
+          <a href="#" className="flex items-center px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">
             Gửi phản hồi
-          </Link>
-          <Link href="#" className="flex items-center px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">
+          </a>
+          <a href="#" className="flex items-center px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">
             Trung tâm hỗ trợ
-          </Link>
+          </a>
         </div>
       </div>
 
