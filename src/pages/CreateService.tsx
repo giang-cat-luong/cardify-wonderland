@@ -1,10 +1,11 @@
 
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/router";
 import { ArrowLeft, Info, Plus, Upload, X, Youtube } from "lucide-react";
+import Link from "next/link";
 
 const CreateService = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const [currentStep, setCurrentStep] = useState(1);
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
   
@@ -93,7 +94,14 @@ const CreateService = () => {
 
   // Go directly to a specific step if it's already completed or is the next step
   const goToStep = (step: number) => {
-    // Can only go to a step if:
+    // Can always go to step 1
+    if (step === 1) {
+      setCurrentStep(step);
+      window.scrollTo(0, 0);
+      return;
+    }
+    
+    // For other steps, can only go to a step if:
     // 1. It's the current step
     // 2. It's a previous step that's been completed
     // 3. It's the next step after all completed steps
@@ -184,7 +192,7 @@ const CreateService = () => {
     });
     
     // Navigate back to services list
-    navigate("/my-services");
+    router.push("/my-services");
   };
 
   const handleServiceDetailChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -712,7 +720,7 @@ const CreateService = () => {
         <div className="container mx-auto px-6 py-4 flex items-center">
           <button 
             className="mr-4 text-gray-500"
-            onClick={() => navigate("/my-services")}
+            onClick={() => router.push("/my-services")}
           >
             <ArrowLeft className="w-5 h-5" />
           </button>
@@ -734,7 +742,7 @@ const CreateService = () => {
           {[1, 2, 3, 4, 5].map((step) => (
             <div 
               key={step} 
-              className="z-10 flex flex-col items-center"
+              className="z-10 flex flex-col items-center cursor-pointer"
               onClick={() => goToStep(step)}
             >
               <div 
@@ -742,8 +750,8 @@ const CreateService = () => {
                   ${step <= currentStep 
                     ? 'bg-blue-600 text-white' 
                     : completedSteps.includes(step - 1) || (step === completedSteps.length + 1)
-                      ? 'bg-white border-2 border-gray-300 text-gray-600 cursor-pointer hover:border-blue-400'
-                      : 'bg-white border-2 border-gray-300 text-gray-400 cursor-not-allowed opacity-60'
+                      ? 'bg-white border-2 border-gray-300 text-gray-600 hover:border-blue-400'
+                      : 'bg-white border-2 border-gray-300 text-gray-400 opacity-60'
                   }`}
               >
                 {step}
