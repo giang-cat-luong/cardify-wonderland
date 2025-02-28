@@ -1,11 +1,12 @@
 
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { ArrowLeft, Info, Plus, Trash, Upload, X, Youtube } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { ArrowLeft, Info, Plus, Upload, X, Youtube } from "lucide-react";
 
 const CreateService = () => {
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
+  const [completedSteps, setCompletedSteps] = useState<number[]>([]);
   
   // Service Details (Step 1)
   const [serviceDetails, setServiceDetails] = useState({
@@ -28,8 +29,8 @@ const CreateService = () => {
   ]);
 
   // Images (Step 3)
-  const [coverImage, setCoverImage] = useState(null);
-  const [serviceImages, setServiceImages] = useState([]);
+  const [coverImage, setCoverImage] = useState<string | null>(null);
+  const [serviceImages, setServiceImages] = useState<string[]>([]);
   const [youtubeUrl, setYoutubeUrl] = useState("");
 
   // Work Steps (Step 4)
@@ -45,15 +46,65 @@ const CreateService = () => {
     agreeTerms: false
   });
 
+  // Check if the current step is complete
+  const isStepComplete = (step: number): boolean => {
+    switch (step) {
+      case 1:
+        return serviceDetails.category !== "" && 
+               serviceDetails.type !== "" && 
+               serviceDetails.name !== "" && 
+               serviceDetails.description !== "";
+      case 2:
+        return packages.every(pkg => 
+          pkg.name !== "" && 
+          pkg.deliverables !== "" && 
+          pkg.price !== "" && 
+          pkg.deliveryDays !== ""
+        );
+      case 3:
+        return coverImage !== null && serviceImages.length >= 2;
+      case 4:
+        return workSteps.every(step => step.description !== "");
+      case 5:
+        return Object.values(confirmations).every(value => value === true);
+      default:
+        return false;
+    }
+  };
+
   // Handle Steps Navigation
   const nextStep = () => {
-    setCurrentStep(currentStep + 1);
-    window.scrollTo(0, 0);
+    if (currentStep < 5) {
+      // Add current step to completed steps if not already there
+      if (!completedSteps.includes(currentStep)) {
+        setCompletedSteps([...completedSteps, currentStep]);
+      }
+      setCurrentStep(currentStep + 1);
+      window.scrollTo(0, 0);
+    }
   };
 
   const prevStep = () => {
-    setCurrentStep(currentStep - 1);
-    window.scrollTo(0, 0);
+    if (currentStep > 1) {
+      setCurrentStep(currentStep - 1);
+      window.scrollTo(0, 0);
+    }
+  };
+
+  // Go directly to a specific step if it's already completed or is the next step
+  const goToStep = (step: number) => {
+    // Can only go to a step if:
+    // 1. It's the current step
+    // 2. It's a previous step that's been completed
+    // 3. It's the next step after all completed steps
+    if (
+      step === currentStep ||
+      completedSteps.includes(step - 1) ||
+      (step === completedSteps.length + 1)
+    ) {
+      setCurrentStep(step);
+      window.scrollTo(0, 0);
+    }
   };
 
   // Handle Package Functions
@@ -72,27 +123,29 @@ const CreateService = () => {
     ]);
   };
 
-  const removePackage = (id) => {
+  const removePackage = (id: number) => {
     if (packages.length > 1) {
       setPackages(packages.filter(pkg => pkg.id !== id));
     }
   };
 
   // Handle Image Functions
-  const handleCoverImageUpload = (e) => {
+  const handleCoverImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      setCoverImage(URL.createObjectURL(e.target.files[0]));
+      const file = e.target.files[0];
+      const imageUrl = URL.createObjectURL(file);
+      setCoverImage(imageUrl);
     }
   };
 
-  const handleServiceImageUpload = (e) => {
+  const handleServiceImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       const newImages = Array.from(e.target.files).map(file => URL.createObjectURL(file));
       setServiceImages([...serviceImages, ...newImages]);
     }
   };
 
-  const removeServiceImage = (index) => {
+  const removeServiceImage = (index: number) => {
     const updatedImages = [...serviceImages];
     updatedImages.splice(index, 1);
     setServiceImages(updatedImages);
@@ -104,13 +157,13 @@ const CreateService = () => {
     setWorkSteps([...workSteps, { id: newId, description: "" }]);
   };
 
-  const removeWorkStep = (id) => {
+  const removeWorkStep = (id: number) => {
     if (workSteps.length > 2) {
       setWorkSteps(workSteps.filter(step => step.id !== id));
     }
   };
 
-  const updateWorkStep = (id, description) => {
+  const updateWorkStep = (id: number, description: string) => {
     setWorkSteps(
       workSteps.map(step => 
         step.id === id ? { ...step, description } : step
@@ -134,7 +187,7 @@ const CreateService = () => {
     navigate("/my-services");
   };
 
-  const handleServiceDetailChange = (e) => {
+  const handleServiceDetailChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setServiceDetails({
       ...serviceDetails,
@@ -142,7 +195,7 @@ const CreateService = () => {
     });
   };
 
-  const handlePackageChange = (id, field, value) => {
+  const handlePackageChange = (id: number, field: string, value: string) => {
     setPackages(
       packages.map(pkg => 
         pkg.id === id ? { ...pkg, [field]: value } : pkg
@@ -150,7 +203,7 @@ const CreateService = () => {
     );
   };
 
-  const handleConfirmationChange = (key, checked) => {
+  const handleConfirmationChange = (key: string, checked: boolean) => {
     setConfirmations({
       ...confirmations,
       [key]: checked
@@ -669,7 +722,7 @@ const CreateService = () => {
       
       {/* Steps Progress */}
       <div className="container mx-auto px-6 py-6">
-        <div className="flex justify-between mb-8 relative">
+        <div className="max-w-4xl mx-auto flex justify-between mb-8 relative">
           {/* Progress Bar */}
           <div className="absolute top-1/2 left-0 right-0 h-1 bg-gray-200 -translate-y-1/2 z-0"></div>
           <div 
@@ -679,15 +732,27 @@ const CreateService = () => {
           
           {/* Step Circles */}
           {[1, 2, 3, 4, 5].map((step) => (
-            <div key={step} className="z-10 flex flex-col items-center">
+            <div 
+              key={step} 
+              className="z-10 flex flex-col items-center"
+              onClick={() => goToStep(step)}
+            >
               <div 
-                className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                  step <= currentStep ? 'bg-blue-600 text-white' : 'bg-white border-2 border-gray-300 text-gray-600'
-                }`}
+                className={`w-8 h-8 rounded-full flex items-center justify-center 
+                  ${step <= currentStep 
+                    ? 'bg-blue-600 text-white' 
+                    : completedSteps.includes(step - 1) || (step === completedSteps.length + 1)
+                      ? 'bg-white border-2 border-gray-300 text-gray-600 cursor-pointer hover:border-blue-400'
+                      : 'bg-white border-2 border-gray-300 text-gray-400 cursor-not-allowed opacity-60'
+                  }`}
               >
                 {step}
               </div>
-              <span className="text-xs mt-2 text-gray-600">
+              <span className={`text-xs mt-2 ${
+                step <= currentStep || completedSteps.includes(step) 
+                  ? 'text-gray-700' 
+                  : 'text-gray-500'
+              }`}>
                 {step === 1 && 'Thông tin'}
                 {step === 2 && 'Gói dịch vụ'}
                 {step === 3 && 'Ảnh/video'}
@@ -699,7 +764,9 @@ const CreateService = () => {
         </div>
         
         {/* Step Content */}
-        {renderStepContent()}
+        <div className="max-w-4xl mx-auto">
+          {renderStepContent()}
+        </div>
       </div>
     </div>
   );
