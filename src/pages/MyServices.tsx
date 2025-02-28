@@ -362,6 +362,50 @@ const MyServices = () => {
                     </ul>
 
                     <p className="mt-6 text-gray-700">Freelancer có thể tham khảo thêm thông tin chi tiết thông qua các ví dụ sau đây.</p>
+                    
+                    {/* Table for Phí dịch vụ được tính như thế nào */}
+                    <div className="mt-6 overflow-hidden border border-gray-200 rounded-lg">
+                      <table className="w-full">
+                        <thead>
+                          <tr className="bg-gray-50">
+                            <th className="p-4 text-left font-medium text-sm text-gray-700">Bảng tính phí dịch vụ</th>
+                            <th className="p-4 text-left font-medium text-sm text-gray-700">Cách tính</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr className="border-t border-gray-200">
+                            <td className="p-4">
+                              <div className="flex items-center">
+                                <span className="font-medium mr-2">1. Thu nhập tích lũy</span>
+                              </div>
+                            </td>
+                            <td className="p-4">
+                              Thu nhập của các dự án đã hoàn thành trong 3 tháng gần nhất, tính tới ngày tạo báo giá.
+                            </td>
+                          </tr>
+                          <tr className="border-t border-gray-200">
+                            <td className="p-4">
+                              <div className="flex items-center">
+                                <span className="font-medium mr-2">2. Xác định cấp bậc</span>
+                              </div>
+                            </td>
+                            <td className="p-4">
+                              Dựa vào thu nhập tích lũy để xác định cấp bậc thành viên tương ứng.
+                            </td>
+                          </tr>
+                          <tr className="border-t border-gray-200">
+                            <td className="p-4">
+                              <div className="flex items-center">
+                                <span className="font-medium mr-2">3. Áp dụng % phí dịch vụ</span>
+                              </div>
+                            </td>
+                            <td className="p-4">
+                              Áp dụng % phí dịch vụ tương ứng với cấp bậc thành viên cho dự án.
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
 
                   {/* Example 1 */}
@@ -428,6 +472,140 @@ const MyServices = () => {
                     </div>
 
                     <p>Nếu có dự án mà Freelancer "tạo báo giá" vào ngày 10 tháng 6 năm 2024, phí dịch vụ cho dự án đó sẽ là 10%.</p>
+                    <p className="text-sm text-gray-500 mt-2 italic">Lưu ý: Nếu có chỉnh sửa báo giá, % phí dịch vụ sẽ được tính toán lại dựa trên ngày chỉnh sửa.</p>
+                  </div>
+                  
+                  {/* Example 2 */}
+                  <div className="mb-8 bg-blue-50 rounded-lg p-6">
+                    <div className="bg-blue-100 rounded-lg px-4 py-2 inline-block mb-4">
+                      <h3 className="text-blue-800 font-medium">Ví dụ 2</h3>
+                      <span className="text-blue-700">Có dự án được phê duyệt trong tháng này cho đến ngày hiện tại</span>
+                    </div>
+
+                    <ul className="space-y-3 mb-4">
+                      <li className="flex items-start">
+                        <span className="text-blue-500 mr-2">•</span>
+                        <span>Hôm nay là ngày 20 tháng 6 năm 2024.</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-blue-500 mr-2">•</span>
+                        <span>Trong tháng 6, có 1 dự án đã được phê duyệt với thu nhập 7.000.000 VND.</span>
+                      </li>
+                    </ul>
+
+                    <p className="mb-4">Do đó, % phí dịch vụ tính đến ngày 20 tháng 6 năm 2024 sẽ như sau:</p>
+
+                    <div className="grid grid-cols-4 gap-3 mb-6">
+                      <div className="bg-blue-400 text-white rounded-lg p-3 text-center">
+                        <div className="font-medium">tháng 3 năm 2024</div>
+                        <div className="mt-2">
+                          <div>Thu nhập</div>
+                          <div className="font-bold">5.000.000 VND</div>
+                        </div>
+                      </div>
+                      <div className="bg-blue-400 text-white rounded-lg p-3 text-center">
+                        <div className="font-medium">tháng 4 năm 2024</div>
+                        <div className="mt-2">
+                          <div>Thu nhập</div>
+                          <div className="font-bold">2.000.000 VND</div>
+                        </div>
+                      </div>
+                      <div className="bg-blue-400 text-white rounded-lg p-3 text-center">
+                        <div className="font-medium">tháng 5 năm 2024</div>
+                        <div className="mt-2">
+                          <div>Thu nhập</div>
+                          <div className="font-bold">1.000.000 VND</div>
+                        </div>
+                      </div>
+                      <div className="bg-blue-600 text-white rounded-lg p-3 text-center">
+                        <div className="font-medium">tháng 6 năm 2024</div>
+                        <div className="mt-2">
+                          <div>Thu nhập tính đến ngày 20 tháng 6</div>
+                          <div className="font-bold">7.000.000 VND</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col items-center py-4 mb-4">
+                      <div className="h-1 w-full bg-gray-300 mb-4 relative">
+                        <div className="absolute inset-0 bg-blue-600 w-5/6"></div>
+                      </div>
+                      <div className="text-gray-700">Thu nhập tích lũy 8.000.000 + 7.000.000 = <span className="font-bold">15.000.000 VND</span></div>
+                      
+                      <div className="mt-6 bg-gray-300 text-white px-6 py-2 rounded-full flex items-center">
+                        <span className="mr-2">Silver</span>
+                        <span className="font-bold">Phí dịch vụ 9%</span>
+                      </div>
+                    </div>
+
+                    <p>Nếu có dự án mà Freelancer "tạo báo giá" vào ngày 20 tháng 6 năm 2024, phí dịch vụ cho dự án đó sẽ là 9%.</p>
+                    <p className="text-sm text-gray-500 mt-2 italic">Lưu ý: Nếu có chỉnh sửa báo giá, % phí dịch vụ sẽ được tính toán lại dựa trên ngày chỉnh sửa.</p>
+                  </div>
+                  
+                  {/* Example 3 */}
+                  <div className="mb-8 bg-blue-50 rounded-lg p-6">
+                    <div className="bg-blue-100 rounded-lg px-4 py-2 inline-block mb-4">
+                      <h3 className="text-blue-800 font-medium">Ví dụ 3</h3>
+                      <span className="text-blue-700">Đầu tháng mới</span>
+                    </div>
+
+                    <ul className="space-y-3 mb-4">
+                      <li className="flex items-start">
+                        <span className="text-blue-500 mr-2">•</span>
+                        <span>Hôm nay là ngày 1 tháng 7 năm 2024.</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-blue-500 mr-2">•</span>
+                        <span>Tháng 4 không còn được tính, thay vào đó là tháng 7.</span>
+                      </li>
+                    </ul>
+
+                    <p className="mb-4">Do đó, % phí dịch vụ tính đến ngày 1 tháng 7 năm 2024 sẽ như sau:</p>
+
+                    <div className="grid grid-cols-4 gap-3 mb-6">
+                      <div className="bg-blue-400 text-white rounded-lg p-3 text-center">
+                        <div className="font-medium">tháng 4 năm 2024</div>
+                        <div className="mt-2">
+                          <div>Thu nhập</div>
+                          <div className="font-bold text-gray-300 line-through">2.000.000 VND</div>
+                        </div>
+                      </div>
+                      <div className="bg-blue-400 text-white rounded-lg p-3 text-center">
+                        <div className="font-medium">tháng 5 năm 2024</div>
+                        <div className="mt-2">
+                          <div>Thu nhập</div>
+                          <div className="font-bold">1.000.000 VND</div>
+                        </div>
+                      </div>
+                      <div className="bg-blue-400 text-white rounded-lg p-3 text-center">
+                        <div className="font-medium">tháng 6 năm 2024</div>
+                        <div className="mt-2">
+                          <div>Thu nhập</div>
+                          <div className="font-bold">7.000.000 VND</div>
+                        </div>
+                      </div>
+                      <div className="bg-blue-600 text-white rounded-lg p-3 text-center">
+                        <div className="font-medium">tháng 7 năm 2024</div>
+                        <div className="mt-2">
+                          <div>Thu nhập tính đến ngày 1 tháng 7</div>
+                          <div className="font-bold">0 VND</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col items-center py-4 mb-4">
+                      <div className="h-1 w-full bg-gray-300 mb-4 relative">
+                        <div className="absolute inset-0 bg-blue-600 w-1/2"></div>
+                      </div>
+                      <div className="text-gray-700">Thu nhập tích lũy 1.000.000 + 7.000.000 + 0 = <span className="font-bold">8.000.000 VND</span></div>
+                      
+                      <div className="mt-6 bg-amber-500 text-white px-6 py-2 rounded-full flex items-center">
+                        <span className="mr-2">Bronze</span>
+                        <span className="font-bold">Phí dịch vụ 10%</span>
+                      </div>
+                    </div>
+
+                    <p>Nếu có dự án mà Freelancer "tạo báo giá" vào ngày 1 tháng 7 năm 2024, phí dịch vụ cho dự án đó sẽ là 10%.</p>
                     <p className="text-sm text-gray-500 mt-2 italic">Lưu ý: Nếu có chỉnh sửa báo giá, % phí dịch vụ sẽ được tính toán lại dựa trên ngày chỉnh sửa.</p>
                   </div>
                   
@@ -509,7 +687,7 @@ const MyServices = () => {
                           <span className="text-blue-600 font-medium">
                             {projectPrice 
                               ? formatNumber(calculateFee(parseInt(projectPrice) || 0, memberTier.feePercent))
-                              : '0,00'} VND
+                              : '0'} VND
                           </span>
                         </div>
 
@@ -520,7 +698,7 @@ const MyServices = () => {
                           <div className="text-blue-600 font-bold">
                             {projectPrice 
                               ? formatNumber(calculateNetAmount(parseInt(projectPrice) || 0, memberTier.feePercent))
-                              : '123.213.123.213,00'} VND
+                              : '0'} VND
                           </div>
                         </div>
                       </div>
