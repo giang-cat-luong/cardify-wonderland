@@ -1,8 +1,17 @@
+
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 
 const NotFound = () => {
-  const location = useLocation();
+  let location;
+  
+  try {
+    location = useLocation();
+  } catch (error) {
+    // If useLocation fails, we're likely outside Router context
+    console.error("Router context not available:", error);
+    location = { pathname: window.location.pathname };
+  }
 
   useEffect(() => {
     console.error(
