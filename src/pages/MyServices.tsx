@@ -1,4 +1,5 @@
 
+// MyServices component - Displays service information and fee calculator for freelancers
 import { ArrowLeft, Bell, ChevronDown, Eye, Info, MessageSquare, Pencil, Plus, Trash2, X } from "lucide-react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -355,16 +356,16 @@ const MyServices = () => {
                   {/* How Fees Are Calculated */}
                   <div className="mb-8">
                     <h2 className="text-xl font-medium mb-6">Phí dịch vụ được tính như thế nào?</h2>
-                    <ul className="list-disc pl-5 space-y-2 text-gray-700">
+                    <ul className="list-disc pl-5 space-y-2 text-gray-700 mb-6">
                       <li>Hệ thống sẽ tính phí dựa trên tổng thu nhập tích lũy trong 3 tháng gần nhất tính đến ngày hiện tại, chỉ bao gồm các dự án đã được phê duyệt.</li>
                       <li>Tỷ lệ phần trăm phí dịch vụ cho mỗi báo giá sẽ được tính toán ngay khi Freelancer tạo báo giá.</li>
                       <li>Nếu báo giá được chỉnh sửa, tỷ lệ phần trăm phí dịch vụ hệ thống sẽ được điều chỉnh và tính toán dựa trên ngày chỉnh sửa.</li>
                     </ul>
 
-                    <p className="mt-6 text-gray-700">Freelancer có thể tham khảo thêm thông tin chi tiết thông qua các ví dụ sau đây.</p>
+                    <p className="text-gray-700 mb-6">Freelancer có thể tham khảo thêm thông tin chi tiết thông qua các ví dụ sau đây.</p>
                     
                     {/* Table for Phí dịch vụ được tính như thế nào */}
-                    <div className="mt-6 overflow-hidden border border-gray-200 rounded-lg">
+                    <div className="overflow-hidden border border-gray-200 rounded-lg mb-6">
                       <table className="w-full">
                         <thead>
                           <tr className="bg-gray-50">
