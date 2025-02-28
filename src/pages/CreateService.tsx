@@ -1,11 +1,10 @@
 
 import { useState } from "react";
-import { useRouter } from "next/router";
+import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Info, Plus, Upload, X, Youtube } from "lucide-react";
-import Link from "next/link";
 
 const CreateService = () => {
-  const router = useRouter();
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
   
@@ -192,7 +191,7 @@ const CreateService = () => {
     });
     
     // Navigate back to services list
-    router.push("/my-services");
+    navigate("/my-services");
   };
 
   const handleServiceDetailChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -720,7 +719,7 @@ const CreateService = () => {
         <div className="container mx-auto px-6 py-4 flex items-center">
           <button 
             className="mr-4 text-gray-500"
-            onClick={() => router.push("/my-services")}
+            onClick={() => navigate("/my-services")}
           >
             <ArrowLeft className="w-5 h-5" />
           </button>
