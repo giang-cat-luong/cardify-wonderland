@@ -1,8 +1,15 @@
 
 import { ArrowLeft, Bell, Eye, Info, MessageSquare, Pencil, Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const MyServices = () => {
+  const navigate = useNavigate();
+  
+  const handleAddNewService = () => {
+    navigate('/create-service');
+  };
+
   return (
     <div className="min-h-screen bg-[#F8F9FB] flex">
       {/* Sidebar */}
@@ -121,7 +128,10 @@ const MyServices = () => {
           {/* My Services Section */}
           <div className="mb-6 flex justify-between items-center">
             <h2 className="text-xl font-medium">Dịch vụ của tôi (1/5)</h2>
-            <button className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium">
+            <button 
+              onClick={handleAddNewService}
+              className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium"
+            >
               <Plus className="w-4 h-4" />
               Thêm dịch vụ mới
             </button>
