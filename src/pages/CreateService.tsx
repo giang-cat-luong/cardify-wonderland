@@ -1,12 +1,10 @@
 
-"use client";
 import { useState } from "react";
 import { ArrowLeft, Info, Plus, Upload, X, Youtube } from "lucide-react";
-import { useRouter } from 'next/navigation';
-
+import { useNavigate } from "react-router-dom";
 
 const CreateService = () => {
-  const router = useRouter()
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
   const [validationError, setValidationError] = useState<string | null>(null);
@@ -264,7 +262,7 @@ const CreateService = () => {
       workSteps,
     });
 
-    router.push("/my-services");
+    navigate("/my-services");
   };
 
   const handleServiceDetailChange = (
