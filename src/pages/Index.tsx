@@ -2,6 +2,7 @@
 import { Bell, Search, ArrowRight, Info, LineChart, Eye, User, Settings, LogOut } from "lucide-react";
 import { Line, LineChart as RechartsLineChart, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import { useState, useRef, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const Index = () => {
   // Sample chart data
@@ -130,10 +131,10 @@ const Index = () => {
                 {isProfileMenuOpen && (
                   <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 z-50 overflow-hidden">
                     <div className="py-2">
-                      <a href="#" className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                      <Link to="/profile" className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                         <User className="w-4 h-4 mr-3 text-gray-500" />
                         <span>Hồ sơ freelancer</span>
-                      </a>
+                      </Link>
                       <a href="#" className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                         <Settings className="w-4 h-4 mr-3 text-gray-500" />
                         <span>Cài đặt tài khoản</span>
