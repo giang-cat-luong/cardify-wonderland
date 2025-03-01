@@ -1,5 +1,7 @@
 
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { Pencil } from "lucide-react";
+import { toast } from "@/components/ui/use-toast";
 
 interface FreelancerInfoSectionProps {
   username?: string;
@@ -24,6 +26,29 @@ const FreelancerInfoSection = ({
   setAboutText = () => {},
   handleSave
 }: FreelancerInfoSectionProps) => {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [profileImage, setProfileImage] = useState<string>("/lovable-uploads/30d1fb74-6384-4994-8a19-23c53cdfd724.png");
+
+  const handleProfileImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const result = e.target?.result as string;
+        setProfileImage(result);
+        toast({
+          title: "Ảnh đại diện đã được cập nhật",
+          description: "Nhấn nút Lưu để lưu lại thay đổi.",
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleImageEditClick = () => {
+    fileInputRef.current?.click();
+  };
+
   return (
     <div className="bg-white rounded-md shadow-sm overflow-hidden">
       <div className="border-b border-gray-200 p-5">
@@ -94,19 +119,24 @@ const FreelancerInfoSection = ({
           <div className="md:w-1/3 flex flex-col items-center">
             <div className="relative w-32 h-32 rounded-full overflow-hidden">
               <img 
-                src="/lovable-uploads/30d1fb74-6384-4994-8a19-23c53cdfd724.png" 
+                src={profileImage} 
                 alt="Profile" 
                 className="w-full h-full object-cover"
               />
               <button 
-                onClick={() => {}} 
-                className="absolute bottom-0 right-0 bg-white rounded-full p-1 shadow-md hover:bg-gray-100"
+                onClick={handleImageEditClick} 
+                className="absolute bottom-0 right-0 bg-white rounded-full p-2 shadow-md hover:bg-gray-100"
+                aria-label="Edit Profile Picture"
               >
-                <span className="sr-only">Edit Profile</span>
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                </svg>
+                <Pencil className="h-4 w-4 text-gray-600" />
               </button>
+              <input 
+                type="file"
+                ref={fileInputRef}
+                onChange={handleProfileImageChange}
+                accept="image/*"
+                className="hidden"
+              />
             </div>
           </div>
         </div>
