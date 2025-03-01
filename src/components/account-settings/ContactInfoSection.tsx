@@ -11,16 +11,25 @@ interface Address {
 }
 
 interface ContactInfoSectionProps {
-  email: string;
-  address: Address;
-  setAddress: (address: Address) => void;
+  email?: string;
+  address?: Address;
+  setAddress?: (address: Address) => void;
   handleSave: () => void;
 }
 
+const defaultAddress: Address = {
+  country: "vietnam",
+  addressDetail: "",
+  postalCode: "",
+  district: "",
+  ward: "",
+  city: ""
+};
+
 const ContactInfoSection = ({
-  email,
-  address,
-  setAddress,
+  email = "user@example.com",
+  address = defaultAddress,
+  setAddress = () => {},
   handleSave
 }: ContactInfoSectionProps) => {
   return (

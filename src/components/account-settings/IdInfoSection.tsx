@@ -8,27 +8,33 @@ interface BirthDay {
 }
 
 interface IdInfoSectionProps {
-  idNumber: string;
-  setIdNumber: (idNumber: string) => void;
-  firstName: string;
-  setFirstName: (firstName: string) => void;
-  lastName: string;
-  setLastName: (lastName: string) => void;
-  birthDay: BirthDay;
-  setBirthDay: (birthDay: BirthDay) => void;
+  idNumber?: string;
+  setIdNumber?: (idNumber: string) => void;
+  firstName?: string;
+  setFirstName?: (firstName: string) => void;
+  lastName?: string;
+  setLastName?: (lastName: string) => void;
+  birthDay?: BirthDay;
+  setBirthDay?: (birthDay: BirthDay) => void;
   handleSave: () => void;
   handleUpload: (type: string) => void;
 }
 
+const defaultBirthday: BirthDay = {
+  day: "1",
+  month: "1",
+  year: "1990"
+};
+
 const IdInfoSection = ({
-  idNumber,
-  setIdNumber,
-  firstName,
-  setFirstName,
-  lastName,
-  setLastName,
-  birthDay,
-  setBirthDay,
+  idNumber = "",
+  setIdNumber = () => {},
+  firstName = "",
+  setFirstName = () => {},
+  lastName = "",
+  setLastName = () => {},
+  birthDay = defaultBirthday,
+  setBirthDay = () => {},
   handleSave,
   handleUpload
 }: IdInfoSectionProps) => {

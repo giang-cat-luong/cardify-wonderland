@@ -2,26 +2,26 @@
 import { useState } from "react";
 
 interface FreelancerInfoSectionProps {
-  username: string;
-  setUsername: (username: string) => void;
-  displayName: string;
-  setDisplayName: (displayName: string) => void;
-  userType: string;
-  setUserType: (userType: string) => void;
-  aboutText: string;
-  setAboutText: (aboutText: string) => void;
+  username?: string;
+  setUsername?: (username: string) => void;
+  displayName?: string;
+  setDisplayName?: (displayName: string) => void;
+  userType?: string;
+  setUserType?: (userType: string) => void;
+  aboutText?: string;
+  setAboutText?: (aboutText: string) => void;
   handleSave: () => void;
 }
 
 const FreelancerInfoSection = ({
-  username,
-  setUsername,
-  displayName,
-  setDisplayName,
-  userType,
-  setUserType,
-  aboutText,
-  setAboutText,
+  username = "",
+  setUsername = () => {},
+  displayName = "",
+  setDisplayName = () => {},
+  userType = "part-time",
+  setUserType = () => {},
+  aboutText = "",
+  setAboutText = () => {},
   handleSave
 }: FreelancerInfoSectionProps) => {
   return (
