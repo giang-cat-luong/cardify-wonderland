@@ -1,5 +1,8 @@
 
-import { Upload } from "lucide-react";
+import { Upload, Trash2 } from "lucide-react";
+import { useState } from "react";
+import { Toast, ToastAction } from "@/components/ui/toast";
+import { useToast } from "@/hooks/use-toast";
 
 interface BirthDay {
   day: string;
@@ -26,6 +29,13 @@ const defaultBirthday: BirthDay = {
   year: "1990"
 };
 
+// Image types and default images
+interface ImageState {
+  idWithFace: string;
+  idFront: string;
+  idBack: string;
+}
+
 const IdInfoSection = ({
   idNumber = "",
   setIdNumber = () => {},
@@ -38,6 +48,61 @@ const IdInfoSection = ({
   handleSave,
   handleUpload
 }: IdInfoSectionProps) => {
+  const { toast } = useToast();
+  
+  // State for managing image uploads
+  const [images, setImages] = useState<ImageState>({
+    idWithFace: "/lovable-uploads/805a53be-9f23-40a2-ad71-f2dbdbd09018.png",
+    idFront: "/lovable-uploads/805a53be-9f23-40a2-ad71-f2dbdbd09018.png",
+    idBack: "/lovable-uploads/4e214565-2372-45e9-bc94-cd2f154badf3.png"
+  });
+
+  // Handle file input change
+  const handleFileChange = (type: keyof ImageState) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      // In a real app, you would upload the file to a server
+      // For this demo, we're just simulating the upload
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        if (event.target?.result) {
+          setImages(prev => ({
+            ...prev,
+            [type]: event.target?.result as string
+          }));
+          
+          toast({
+            title: "Tải lên thành công",
+            description: `Đã tải lên ảnh ${type} thành công`,
+          });
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  // Helper function to trigger file input click
+  const triggerFileInput = (type: keyof ImageState) => {
+    const fileInput = document.getElementById(`file-input-${type}`);
+    if (fileInput) {
+      fileInput.click();
+    }
+  };
+
+  // Delete image
+  const deleteImage = (type: keyof ImageState) => {
+    setImages(prev => ({
+      ...prev,
+      [type]: ""
+    }));
+    
+    toast({
+      title: "Đã xóa",
+      description: `Đã xóa ảnh ${type}`,
+      variant: "destructive"
+    });
+  };
+
   return (
     <div className="bg-white rounded-md shadow-sm overflow-hidden">
       <div className="border-b border-gray-200 p-5">
@@ -67,72 +132,123 @@ const IdInfoSection = ({
 
       <div className="p-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          {/* ID with face */}
           <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-4">
             <h4 className="text-sm font-medium mb-1">Ảnh chụp chung với CMND/CCCD</h4>
             <p className="text-xs text-gray-500 mb-3">Ảnh cần rõ nét và chính chủ</p>
             <div className="relative border border-gray-200 rounded-lg overflow-hidden mb-3">
-              <img 
-                src="/lovable-uploads/805a53be-9f23-40a2-ad71-f2dbdbd09018.png" 
-                alt="ID with face" 
-                className="w-full h-40 object-cover"
-              />
-              <button className="absolute top-2 right-2 bg-gray-800 bg-opacity-70 rounded-full p-1 text-white hover:bg-opacity-90">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" />
-                </svg>
-              </button>
+              {images.idWithFace ? (
+                <>
+                  <img 
+                    src={images.idWithFace} 
+                    alt="ID with face" 
+                    className="w-full h-40 object-cover"
+                  />
+                  <button 
+                    onClick={() => deleteImage('idWithFace')}
+                    className="absolute top-2 right-2 bg-gray-800 bg-opacity-70 rounded-full p-1 text-white hover:bg-opacity-90"
+                  >
+                    <Trash2 className="h-5 w-5" />
+                  </button>
+                </>
+              ) : (
+                <div className="w-full h-40 flex items-center justify-center bg-gray-100">
+                  <Upload className="h-8 w-8 text-gray-400" />
+                </div>
+              )}
             </div>
+            <input 
+              type="file" 
+              id="file-input-idWithFace" 
+              accept="image/*" 
+              className="hidden" 
+              onChange={handleFileChange('idWithFace')}
+            />
             <button 
-              onClick={() => handleUpload('id-with-face')}
+              onClick={() => triggerFileInput('idWithFace')}
               className="w-full py-2 text-blue-600 border border-blue-300 rounded-md hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
             >
-              Thay đổi ảnh
+              {images.idWithFace ? "Thay đổi ảnh" : "Tải lên ảnh"}
             </button>
           </div>
 
+          {/* ID front */}
           <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-4">
             <h4 className="text-sm font-medium mb-1">Ảnh CMND/CCCD</h4>
             <p className="text-xs text-gray-500 mb-3">Ảnh cần rõ nét</p>
             <div className="relative border border-gray-200 rounded-lg overflow-hidden mb-3">
-              <img 
-                src="/lovable-uploads/805a53be-9f23-40a2-ad71-f2dbdbd09018.png" 
-                alt="ID front" 
-                className="w-full h-40 object-cover"
-              />
-              <button className="absolute top-2 right-2 bg-gray-800 bg-opacity-70 rounded-full p-1 text-white hover:bg-opacity-90">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" />
-                </svg>
-              </button>
+              {images.idFront ? (
+                <>
+                  <img 
+                    src={images.idFront} 
+                    alt="ID front" 
+                    className="w-full h-40 object-cover"
+                  />
+                  <button 
+                    onClick={() => deleteImage('idFront')}
+                    className="absolute top-2 right-2 bg-gray-800 bg-opacity-70 rounded-full p-1 text-white hover:bg-opacity-90"
+                  >
+                    <Trash2 className="h-5 w-5" />
+                  </button>
+                </>
+              ) : (
+                <div className="w-full h-40 flex items-center justify-center bg-gray-100">
+                  <Upload className="h-8 w-8 text-gray-400" />
+                </div>
+              )}
             </div>
+            <input 
+              type="file" 
+              id="file-input-idFront" 
+              accept="image/*" 
+              className="hidden" 
+              onChange={handleFileChange('idFront')}
+            />
             <button 
-              onClick={() => handleUpload('id-front')}
+              onClick={() => triggerFileInput('idFront')}
               className="w-full py-2 text-blue-600 border border-blue-300 rounded-md hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
             >
-              Thay đổi ảnh
+              {images.idFront ? "Thay đổi ảnh" : "Tải lên ảnh"}
             </button>
           </div>
 
+          {/* ID back */}
           <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-4">
             <h4 className="text-sm font-medium mb-1">Ảnh CMND/CCCD mặt sau</h4>
             <p className="text-xs text-gray-500 mb-3">Ảnh cần rõ nét</p>
             <div className="relative border border-gray-200 rounded-lg overflow-hidden mb-3">
-              <img 
-                src="/lovable-uploads/4e214565-2372-45e9-bc94-cd2f154badf3.png" 
-                alt="ID back" 
-                className="w-full h-40 object-cover"
-              />
-              <button className="absolute top-2 right-2 bg-gray-800 bg-opacity-70 rounded-full p-1 text-white hover:bg-opacity-90">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" />
-                </svg>
-              </button>
+              {images.idBack ? (
+                <>
+                  <img 
+                    src={images.idBack} 
+                    alt="ID back" 
+                    className="w-full h-40 object-cover"
+                  />
+                  <button 
+                    onClick={() => deleteImage('idBack')}
+                    className="absolute top-2 right-2 bg-gray-800 bg-opacity-70 rounded-full p-1 text-white hover:bg-opacity-90"
+                  >
+                    <Trash2 className="h-5 w-5" />
+                  </button>
+                </>
+              ) : (
+                <div className="w-full h-40 flex items-center justify-center bg-gray-100">
+                  <Upload className="h-8 w-8 text-gray-400" />
+                </div>
+              )}
             </div>
+            <input 
+              type="file" 
+              id="file-input-idBack" 
+              accept="image/*" 
+              className="hidden" 
+              onChange={handleFileChange('idBack')}
+            />
             <button 
-              onClick={() => handleUpload('id-back')}
+              onClick={() => triggerFileInput('idBack')}
               className="w-full py-2 text-blue-600 border border-blue-300 rounded-md hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
             >
-              Thay đổi ảnh
+              {images.idBack ? "Thay đổi ảnh" : "Tải lên ảnh"}
             </button>
           </div>
         </div>
@@ -215,7 +331,7 @@ const IdInfoSection = ({
             <label className="block text-sm font-medium text-gray-700 mb-2">Chi tiết địa chỉ</label>
             <input
               type="text"
-              value="ewedawdawdawdawd"
+              defaultValue="ewedawdawdawdawd"
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
@@ -225,7 +341,7 @@ const IdInfoSection = ({
               <label className="block text-sm font-medium text-gray-700 mb-2">Mã bưu điện</label>
               <input
                 type="text"
-                value="100000"
+                defaultValue="100000"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
@@ -233,7 +349,7 @@ const IdInfoSection = ({
               <label className="block text-sm font-medium text-gray-700 mb-2">Xã/Phường</label>
               <input
                 type="text"
-                value="dwdwdd"
+                defaultValue="dwdwdd"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
@@ -244,7 +360,7 @@ const IdInfoSection = ({
               <label className="block text-sm font-medium text-gray-700 mb-2">Quận/Huyện</label>
               <input
                 type="text"
-                value="wdwdwd"
+                defaultValue="wdwdwd"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
@@ -252,7 +368,7 @@ const IdInfoSection = ({
               <label className="block text-sm font-medium text-gray-700 mb-2">Tỉnh/Thành phố</label>
               <input
                 type="text"
-                value="Thành phố Hồ Chí Minh"
+                defaultValue="Thành phố Hồ Chí Minh"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
