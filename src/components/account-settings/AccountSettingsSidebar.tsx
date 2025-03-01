@@ -1,44 +1,34 @@
 
-import { useState } from "react";
 import { User, Mail, FileText, CreditCard } from "lucide-react";
-import { Link } from "react-router-dom";
-
-type SectionType = 
-  | "freelancer-info" 
-  | "contact-info" 
-  | "id-info" 
-  | "tax-info" 
-  | "bank-info" 
-  | "employer-info";
+import { Link, useLocation } from "react-router-dom";
 
 interface SidebarItemProps {
   title: string;
   icon: React.ComponentType<any>;
-  section: SectionType;
-  activeSection: string;
-  onClick: (section: SectionType) => void;
+  to: string;
   alert?: boolean;
 }
 
-const SidebarItem = ({ title, icon: Icon, section, activeSection, onClick, alert }: SidebarItemProps) => (
-  <li>
-    <button 
-      onClick={() => onClick(section)}
-      className={`flex items-center w-full px-4 py-3 text-left ${activeSection === section ? "bg-blue-50 border-l-4 border-blue-500 text-blue-600" : "text-gray-700"}`}
-    >
-      <Icon className="w-5 h-5 mr-3 text-gray-500" />
-      {title}
-      {alert && <span className="ml-2 w-2 h-2 bg-red-500 rounded-full"></span>}
-    </button>
-  </li>
-);
+const SidebarItem = ({ title, icon: Icon, to, alert }: SidebarItemProps) => {
+  const location = useLocation();
+  const isActive = location.pathname === `/account-settings/${to}` || 
+                  (to === "freelancer-info" && location.pathname === "/account-settings");
+  
+  return (
+    <li>
+      <Link 
+        to={`/account-settings/${to}`}
+        className={`flex items-center w-full px-4 py-3 text-left ${isActive ? "bg-blue-50 border-l-4 border-blue-500 text-blue-600" : "text-gray-700"}`}
+      >
+        <Icon className="w-5 h-5 mr-3 text-gray-500" />
+        {title}
+        {alert && <span className="ml-2 w-2 h-2 bg-red-500 rounded-full"></span>}
+      </Link>
+    </li>
+  );
+};
 
-interface AccountSettingsSidebarProps {
-  activeSection: SectionType;
-  setActiveSection: (section: SectionType) => void;
-}
-
-const AccountSettingsSidebar = ({ activeSection, setActiveSection }: AccountSettingsSidebarProps) => {
+const AccountSettingsSidebar = () => {
   return (
     <div className="bg-white rounded-md shadow-sm">
       <div className="p-4 border-b border-gray-200">
@@ -49,38 +39,28 @@ const AccountSettingsSidebar = ({ activeSection, setActiveSection }: AccountSett
           <SidebarItem 
             title="Thông tin tài khoản freelancer"
             icon={User}
-            section="freelancer-info"
-            activeSection={activeSection}
-            onClick={setActiveSection}
+            to="freelancer-info"
           />
           <SidebarItem 
             title="Thông tin liên lạc"
             icon={Mail}
-            section="contact-info"
-            activeSection={activeSection}
-            onClick={setActiveSection}
+            to="contact-info"
           />
           <SidebarItem 
             title="Thông tin CMND/CCCD"
             icon={FileText}
-            section="id-info"
-            activeSection={activeSection}
-            onClick={setActiveSection}
+            to="id-info"
             alert={true}
           />
           <SidebarItem 
             title="Thông tin khai báo thuế"
             icon={FileText}
-            section="tax-info"
-            activeSection={activeSection}
-            onClick={setActiveSection}
+            to="tax-info"
           />
           <SidebarItem 
             title="Thông tin ngân hàng"
             icon={CreditCard}
-            section="bank-info"
-            activeSection={activeSection}
-            onClick={setActiveSection}
+            to="bank-info"
           />
         </ul>
       </nav>
@@ -91,9 +71,7 @@ const AccountSettingsSidebar = ({ activeSection, setActiveSection }: AccountSett
           <SidebarItem 
             title="Thông tin tài liệu của người thuê (cá nhân)"
             icon={FileText}
-            section="employer-info"
-            activeSection={activeSection}
-            onClick={setActiveSection}
+            to="employer-info"
           />
         </ul>
       </div>

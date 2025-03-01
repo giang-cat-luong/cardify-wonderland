@@ -17,6 +17,12 @@ import EditSkills from "./pages/EditSkills";
 import EditLanguages from "./pages/EditLanguages";
 import EditCertifications from "./pages/EditCertifications";
 import AccountSettings from "./pages/AccountSettings";
+import FreelancerInfoSection from "./components/account-settings/FreelancerInfoSection";
+import ContactInfoSection from "./components/account-settings/ContactInfoSection";
+import IdInfoSection from "./components/account-settings/IdInfoSection";
+import TaxInfoSection from "./components/account-settings/TaxInfoSection";
+import BankInfoSection from "./components/account-settings/BankInfoSection";
+import EmployerInfoSection from "./components/account-settings/EmployerInfoSection";
 
 const queryClient = new QueryClient();
 
@@ -38,7 +44,18 @@ const App = () => (
           <Route path="/profile/edit/skills" element={<EditSkills />} />
           <Route path="/profile/edit/languages" element={<EditLanguages />} />
           <Route path="/profile/edit/certifications" element={<EditCertifications />} />
-          <Route path="/account-settings" element={<AccountSettings />} />
+          
+          {/* Account Settings Routes */}
+          <Route path="/account-settings" element={<AccountSettings />}>
+            <Route index element={<FreelancerInfoSection handleSave={() => console.log("Saving")} />} />
+            <Route path="freelancer-info" element={<FreelancerInfoSection handleSave={() => console.log("Saving")} />} />
+            <Route path="contact-info" element={<ContactInfoSection handleSave={() => console.log("Saving")} />} />
+            <Route path="id-info" element={<IdInfoSection handleSave={() => console.log("Saving")} handleUpload={() => console.log("Uploading")} />} />
+            <Route path="tax-info" element={<TaxInfoSection handleSave={() => console.log("Saving")} />} />
+            <Route path="bank-info" element={<BankInfoSection handleSave={() => console.log("Saving")} />} />
+            <Route path="employer-info" element={<EmployerInfoSection handleSave={() => console.log("Saving")} />} />
+          </Route>
+          
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
