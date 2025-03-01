@@ -1,7 +1,8 @@
-
+<lov-code>
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { User, Mail, CreditCard, Upload, FileText, Calendar } from "lucide-react";
+import { Upload, Calendar } from "lucide-react";
+import AccountSettingsHeader from "../components/account-settings/AccountSettingsHeader";
+import AccountSettingsSidebar from "../components/account-settings/AccountSettingsSidebar";
 
 const AccountSettings = () => {
   const [activeSection, setActiveSection] = useState("freelancer-info");
@@ -35,90 +36,15 @@ const AccountSettings = () => {
 
   return (
     <div className="min-h-screen bg-[#F8F9FB]">
-      {/* Header */}
-      <div className="p-4 bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto flex items-center">
-          <div className="flex items-center text-blue-600">
-            <Link to="/" className="text-blue-600 font-medium">Seller center</Link>
-            <span className="mx-2 text-gray-400">/</span>
-            <span className="text-gray-600">Cài đặt tài khoản</span>
-          </div>
-        </div>
-      </div>
+      <AccountSettingsHeader />
 
       <div className="max-w-7xl mx-auto py-6 px-4 grid grid-cols-1 md:grid-cols-4 gap-6">
         {/* Left sidebar */}
         <div className="md:col-span-1">
-          <div className="bg-white rounded-md shadow-sm">
-            <div className="p-4 border-b border-gray-200">
-              <h3 className="font-medium text-gray-800">Tài khoản freelancer của bạn</h3>
-            </div>
-            <nav>
-              <ul>
-                <li>
-                  <button 
-                    onClick={() => setActiveSection("freelancer-info")}
-                    className={`flex items-center w-full px-4 py-3 text-left ${activeSection === "freelancer-info" ? "bg-blue-50 border-l-4 border-blue-500 text-blue-600" : "text-gray-700"}`}
-                  >
-                    <User className="w-5 h-5 mr-3 text-gray-500" />
-                    Thông tin tài khoản freelancer
-                  </button>
-                </li>
-                <li>
-                  <button 
-                    onClick={() => setActiveSection("contact-info")}
-                    className={`flex items-center w-full px-4 py-3 text-left ${activeSection === "contact-info" ? "bg-blue-50 border-l-4 border-blue-500 text-blue-600" : "text-gray-700"}`}
-                  >
-                    <Mail className="w-5 h-5 mr-3 text-gray-500" />
-                    Thông tin liên lạc
-                  </button>
-                </li>
-                <li>
-                  <button 
-                    onClick={() => setActiveSection("id-info")}
-                    className={`flex items-center w-full px-4 py-3 text-left ${activeSection === "id-info" ? "bg-blue-50 border-l-4 border-blue-500 text-blue-600" : "text-gray-700"}`}
-                  >
-                    <FileText className="w-5 h-5 mr-3 text-gray-500" />
-                    Thông tin CMND/CCCD
-                    <span className="ml-2 w-2 h-2 bg-red-500 rounded-full"></span>
-                  </button>
-                </li>
-                <li>
-                  <button 
-                    onClick={() => setActiveSection("tax-info")}
-                    className={`flex items-center w-full px-4 py-3 text-left ${activeSection === "tax-info" ? "bg-blue-50 border-l-4 border-blue-500 text-blue-600" : "text-gray-700"}`}
-                  >
-                    <FileText className="w-5 h-5 mr-3 text-gray-500" />
-                    Thông tin khai báo thuế
-                  </button>
-                </li>
-                <li>
-                  <button 
-                    onClick={() => setActiveSection("bank-info")}
-                    className={`flex items-center w-full px-4 py-3 text-left ${activeSection === "bank-info" ? "bg-blue-50 border-l-4 border-blue-500 text-blue-600" : "text-gray-700"}`}
-                  >
-                    <CreditCard className="w-5 h-5 mr-3 text-gray-500" />
-                    Thông tin ngân hàng
-                  </button>
-                </li>
-              </ul>
-            </nav>
-
-            <div className="p-4 border-t border-gray-200">
-              <h3 className="font-medium text-gray-800 mb-2">Thông tin tài liệu của người thuê</h3>
-              <ul>
-                <li>
-                  <button 
-                    onClick={() => setActiveSection("employer-info")}
-                    className={`flex items-center w-full px-4 py-3 text-left ${activeSection === "employer-info" ? "bg-blue-50 border-l-4 border-blue-500 text-blue-600" : "text-gray-700"}`}
-                  >
-                    <FileText className="w-5 h-5 mr-3 text-gray-500" />
-                    Thông tin tài liệu của người thuê (cá nhân)
-                  </button>
-                </li>
-              </ul>
-            </div>
-          </div>
+          <AccountSettingsSidebar 
+            activeSection={activeSection} 
+            setActiveSection={setActiveSection} 
+          />
         </div>
 
         {/* Main content area */}
@@ -617,163 +543,3 @@ const AccountSettings = () => {
                       />
                     </div>
                   </li>
-
-                  <li className="flex">
-                    <div className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-blue-600 text-white font-bold text-sm">
-                      2
-                    </div>
-                    <div className="ml-4">
-                      <h3 className="text-base font-medium text-gray-800">Tải xuống bản cam kết</h3>
-                      <p className="text-sm text-gray-500 mb-2">Bạn có thể tải xuống tài liệu tại đây <a href="#" className="text-blue-600 font-medium">Bản cam kết</a></p>
-                    </div>
-                  </li>
-
-                  <li className="flex">
-                    <div className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-blue-600 text-white font-bold text-sm">
-                      3
-                    </div>
-                    <div className="ml-4">
-                      <h3 className="text-base font-medium text-gray-800">Đọc ký và ký tài liệu</h3>
-                      <p className="text-sm text-gray-500 mb-2">Chữ ký số không được chấp nhận; tài liệu phải được ký bằng chữ ký viết tay</p>
-                    </div>
-                  </li>
-
-                  <li className="flex">
-                    <div className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-blue-600 text-white font-bold text-sm">
-                      4
-                    </div>
-                    <div className="ml-4">
-                      <h3 className="text-base font-medium text-gray-800">Chụp hình tài liệu và tải lên thông qua Fastlance</h3>
-                      <p className="text-sm text-gray-500 mb-2">Bạn có thể tải lên các tệp có định dạng .pdf, .png hoặc .jpg với dung lượng tối đa 10MB</p>
-                      <button
-                        className="flex items-center px-4 py-2 border border-gray-300 rounded-md text-blue-600 hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                      >
-                        <Upload className="w-5 h-5 mr-2" />
-                        Tải lên tài liệu
-                      </button>
-                    </div>
-                  </li>
-                </ol>
-
-                <div className="flex justify-end">
-                  <button
-                    onClick={handleSave}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                  >
-                    Lưu
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Bank Information */}
-          {activeSection === "bank-info" && (
-            <div className="bg-white rounded-md shadow-sm overflow-hidden">
-              <div className="border-b border-gray-200 p-5">
-                <h2 className="text-lg font-medium text-gray-800">Thông tin ngân hàng</h2>
-                <p className="text-sm text-gray-500">Để nhận tiền khi có việc được thuê</p>
-              </div>
-
-              <div className="p-6">
-                <div className="mb-8">
-                  <h3 className="text-base font-medium text-gray-800 mb-4">Ảnh mã QR ngân hàng của bạn (Tên tài khoản phải trùng với CMND/CCCD)</h3>
-                  <p className="text-sm text-gray-500 mb-4">Vui lòng tải lên mã QR từ ứng dụng ngân hàng trực tuyến có hiển thị tên của bạn</p>
-                  
-                  <div className="flex items-center justify-center p-6 bg-gray-100 rounded-lg mb-4">
-                    <img 
-                      src="/lovable-uploads/48265f16-fe13-43a1-9d7e-9b24975b0217.png" 
-                      alt="QR Code" 
-                      className="max-h-60"
-                    />
-                  </div>
-                  
-                  <button
-                    className="flex items-center px-4 py-2 border border-gray-300 rounded-md text-blue-600 hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 mx-auto"
-                  >
-                    <Upload className="w-5 h-5 mr-2" />
-                    Tải ảnh lên
-                  </button>
-                </div>
-
-                <div className="mb-6">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Tên ngân hàng</label>
-                  <select
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                  >
-                    <option selected disabled>Chọn ngân hàng</option>
-                    <option>VietComBank</option>
-                    <option>BIDV</option>
-                    <option>Techcombank</option>
-                    <option>VPBank</option>
-                    <option>MB Bank</option>
-                  </select>
-                </div>
-
-                <div className="mb-6">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Số tài khoản ngân hàng</label>
-                  <input
-                    type="text"
-                    placeholder="Nhập số tài khoản"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                  />
-                </div>
-
-                <div className="flex justify-end">
-                  <button
-                    onClick={handleSave}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                  >
-                    Lưu
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Employer Information */}
-          {activeSection === "employer-info" && (
-            <div className="bg-white rounded-md shadow-sm overflow-hidden">
-              <div className="border-b border-gray-200 p-5">
-                <h2 className="text-lg font-medium text-gray-800">Thông tin tài liệu của người thuê (cá nhân)</h2>
-                <p className="text-sm text-gray-500">Dành cho cá nhân</p>
-              </div>
-
-              <div className="p-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Tên đệm và tên</label>
-                    <input
-                      type="text"
-                      placeholder="Nhập tên đệm và tên"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Họ</label>
-                    <input
-                      type="text"
-                      placeholder="Nhập họ"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                    />
-                  </div>
-                </div>
-
-                <div className="flex justify-end">
-                  <button
-                    onClick={handleSave}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                  >
-                    Lưu
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default AccountSettings;
