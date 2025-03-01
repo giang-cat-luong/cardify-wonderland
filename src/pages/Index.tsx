@@ -2,12 +2,6 @@
 import { Bell, Search, ArrowRight, Info, LineChart, Eye, User, Settings, LogOut } from "lucide-react";
 import { Line, LineChart as RechartsLineChart, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import { useState, useRef, useEffect } from "react";
-import { 
-  Tooltip as UITooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 
 const Index = () => {
   // Sample chart data
@@ -103,30 +97,26 @@ const Index = () => {
                 <span>Fastlance Rewards</span>
                 <span className="ml-2 bg-blue-500 px-2 py-0.5 rounded text-xs">Tích điểm để đổi thưởng</span>
               </button>
-              <TooltipProvider>
-                <UITooltip>
-                  <TooltipTrigger asChild>
-                    <button className="p-2 hover:bg-gray-100 rounded-full">
-                      <Search className="w-5 h-5 text-gray-600" />
-                    </button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Tìm kiếm</p>
-                  </TooltipContent>
-                </UITooltip>
-              </TooltipProvider>
-              <TooltipProvider>
-                <UITooltip>
-                  <TooltipTrigger asChild>
-                    <button className="p-2 hover:bg-gray-100 rounded-full">
-                      <Bell className="w-5 h-5 text-gray-600" />
-                    </button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Thông báo</p>
-                  </TooltipContent>
-                </UITooltip>
-              </TooltipProvider>
+              
+              {/* Search button with Tailwind tooltip */}
+              <div className="relative group">
+                <button className="p-2 hover:bg-gray-100 rounded-full">
+                  <Search className="w-5 h-5 text-gray-600" />
+                </button>
+                <div className="absolute z-10 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-opacity duration-300 bottom-full mb-1 left-1/2 transform -translate-x-1/2 px-2 py-1 bg-gray-800 text-white text-xs rounded whitespace-nowrap">
+                  Tìm kiếm
+                </div>
+              </div>
+              
+              {/* Bell button with Tailwind tooltip */}
+              <div className="relative group">
+                <button className="p-2 hover:bg-gray-100 rounded-full">
+                  <Bell className="w-5 h-5 text-gray-600" />
+                </button>
+                <div className="absolute z-10 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-opacity duration-300 bottom-full mb-1 left-1/2 transform -translate-x-1/2 px-2 py-1 bg-gray-800 text-white text-xs rounded whitespace-nowrap">
+                  Thông báo
+                </div>
+              </div>
               
               {/* Profile Menu */}
               <div className="relative" ref={profileMenuRef}>
@@ -269,7 +259,12 @@ const Index = () => {
               <div className="grid grid-cols-4 gap-4 bg-gray-50 p-4 border-b border-gray-200">
                 <div className="flex items-center">
                   <span className="font-medium text-sm text-gray-700">Tên dự án</span>
-                  <Info className="w-4 h-4 ml-1 text-gray-400" />
+                  <div className="relative group inline-block ml-1">
+                    <Info className="w-4 h-4 text-gray-400" />
+                    <div className="absolute z-10 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-opacity duration-300 bottom-full mb-1 left-1/2 transform -translate-x-1/2 px-2 py-1 bg-gray-800 text-white text-xs rounded whitespace-nowrap">
+                      Thông tin dự án
+                    </div>
+                  </div>
                 </div>
                 <div className="font-medium text-sm text-gray-700">Mã dự án</div>
                 <div className="flex items-center">
@@ -277,7 +272,12 @@ const Index = () => {
                 </div>
                 <div className="flex items-center">
                   <span className="font-medium text-sm text-gray-700">Hạn chót</span>
-                  <Info className="w-4 h-4 ml-1 text-gray-400" />
+                  <div className="relative group inline-block ml-1">
+                    <Info className="w-4 h-4 text-gray-400" />
+                    <div className="absolute z-10 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-opacity duration-300 bottom-full mb-1 left-1/2 transform -translate-x-1/2 px-2 py-1 bg-gray-800 text-white text-xs rounded whitespace-nowrap">
+                      Thời hạn hoàn thành
+                    </div>
+                  </div>
                 </div>
               </div>
               <div className="py-12 flex flex-col items-center justify-center text-gray-500">
