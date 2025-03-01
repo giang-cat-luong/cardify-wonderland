@@ -1,7 +1,6 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Plus, X } from "lucide-react";
+import { Plus, X, ExternalLink } from "lucide-react";
 
 type EducationItem = {
   id: string;
