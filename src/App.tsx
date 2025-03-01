@@ -16,6 +16,7 @@ import EditExperience from "./pages/EditExperience";
 import EditSkills from "./pages/EditSkills";
 import EditLanguages from "./pages/EditLanguages";
 import EditCertifications from "./pages/EditCertifications";
+import AccountSettings from "./pages/AccountSettings";
 
 const queryClient = new QueryClient();
 
@@ -37,6 +38,7 @@ const App = () => (
           <Route path="/profile/edit/skills" element={<EditSkills />} />
           <Route path="/profile/edit/languages" element={<EditLanguages />} />
           <Route path="/profile/edit/certifications" element={<EditCertifications />} />
+          <Route path="/account-settings" element={<AccountSettings />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
