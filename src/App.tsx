@@ -23,6 +23,7 @@ import IdInfoSection from "./components/account-settings/IdInfoSection";
 import TaxInfoSection from "./components/account-settings/TaxInfoSection";
 import BankInfoSection from "./components/account-settings/BankInfoSection";
 import EmployerInfoSection from "./components/account-settings/EmployerInfoSection";
+import MyIncome from "./pages/MyIncome";
 
 const queryClient = new QueryClient();
 
@@ -44,6 +45,7 @@ const App = () => (
           <Route path="/profile/edit/skills" element={<EditSkills />} />
           <Route path="/profile/edit/languages" element={<EditLanguages />} />
           <Route path="/profile/edit/certifications" element={<EditCertifications />} />
+          <Route path="/my-income" element={<MyIncome />} />
           
           {/* Account Settings Routes */}
           <Route path="/account-settings" element={<AccountSettings />}>
