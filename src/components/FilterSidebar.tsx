@@ -34,18 +34,18 @@ const FilterSidebar = ({ isOpen, onClose }: FilterSidebarProps) => {
     };
   }, [isOpen]);
 
-  if (!isOpen) return null;
-
   return (
-    <div className="fixed inset-0 z-50 flex">
+    <div className={`fixed inset-0 z-50 ${isOpen ? "visible" : "invisible"}`}>
       {/* Overlay */}
       <div 
-        className="fixed inset-0 bg-black/20 backdrop-blur-sm transition-opacity duration-300" 
+        className={`fixed inset-0 bg-black/20 backdrop-blur-sm transition-opacity duration-300 ${isOpen ? "opacity-100" : "opacity-0"}`}
         onClick={onClose}
       />
       
       {/* Sidebar */}
-      <div className={`fixed inset-y-0 left-0 w-full sm:w-[400px] bg-white shadow-xl transform transition-transform duration-300 ease-in-out ${isOpen ? "translate-x-0" : "-translate-x-full"}`}>
+      <div 
+        className={`fixed inset-y-0 left-0 w-full sm:w-[400px] bg-white shadow-xl transform transition-all duration-300 ease-in-out ${isOpen ? "translate-x-0" : "-translate-x-full"}`}
+      >
         <div className="h-full flex flex-col">
           {/* Header */}
           <div className="flex justify-end p-4 border-b">

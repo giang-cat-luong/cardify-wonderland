@@ -10,11 +10,15 @@ interface FilterButtonProps {
 const FilterButton = ({ className = "" }: FilterButtonProps) => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
+  const toggleFilter = () => {
+    setIsFilterOpen(!isFilterOpen);
+  };
+
   return (
     <>
       <button
         className={`flex items-center gap-2 px-3 py-2 rounded-md hover:bg-gray-100 ${className}`}
-        onClick={() => setIsFilterOpen(true)}
+        onClick={toggleFilter}
       >
         <Filter className="h-5 w-5" />
         <span>Filter</span>
