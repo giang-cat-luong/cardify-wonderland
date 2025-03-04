@@ -12,8 +12,8 @@ const SortDropdown = ({ className = "" }: SortDropdownProps) => {
   const [selectedOption, setSelectedOption] = useState("recommend");
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Use our custom hook instead of the inline useEffect
-  useClickOutside(dropdownRef, () => setIsOpen(false));
+  // Use our custom hook for handling clicks outside the dropdown
+  useClickOutside(dropdownRef, () => setIsOpen(false), isOpen);
 
   const sortOptions = [
     { value: "recommend", label: "recommend" },

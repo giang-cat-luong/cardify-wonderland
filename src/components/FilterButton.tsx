@@ -12,6 +12,9 @@ const FilterButton = ({ className = "" }: FilterButtonProps) => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const buttonRef = useRef<HTMLDivElement>(null);
 
+  // Use our custom hook to close the filter sidebar when clicking outside
+  useClickOutside(buttonRef, () => setIsFilterOpen(false), isFilterOpen);
+
   const toggleFilter = () => {
     setIsFilterOpen(!isFilterOpen);
   };
