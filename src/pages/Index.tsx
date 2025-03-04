@@ -1,8 +1,9 @@
-import { Bell, Search, ArrowRight, Info, LineChart, Eye, User, Settings, LogOut, Filter } from "lucide-react";
+import { Bell, Search, ArrowRight, Info, LineChart, Eye, User, Settings, LogOut } from "lucide-react";
 import { Line, LineChart as RechartsLineChart, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import FilterButton from "../components/FilterButton";
+import SortDropdown from "../components/SortDropdown";
 
 const Index = () => {
   // Sample chart data
@@ -154,9 +155,10 @@ const Index = () => {
 
         {/* Main Content */}
         <div className="p-8">
-          {/* Add Filter Button */}
-          <div className="mb-6">
+          {/* Add Filter Button and SortDropdown in a flex container */}
+          <div className="mb-6 flex items-center gap-3">
             <FilterButton />
+            <SortDropdown />
           </div>
 
           {/* Member Status Card */}

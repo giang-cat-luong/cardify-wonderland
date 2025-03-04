@@ -17,10 +17,10 @@ const FilterButton = ({ className = "" }: FilterButtonProps) => {
   return (
     <>
       <button
-        className={`flex items-center gap-2 px-3 py-2 rounded-md hover:bg-gray-100 ${className}`}
+        className={`flex items-center gap-2 px-4 py-2 rounded-md border border-gray-300 hover:bg-gray-50 ${className}`}
         onClick={toggleFilter}
       >
-        <Filter className="h-5 w-5" />
+        <Filter className="h-4 w-4" />
         <span>Filter</span>
       </button>
 
