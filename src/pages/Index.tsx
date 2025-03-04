@@ -1,8 +1,8 @@
-
-import { Bell, Search, ArrowRight, Info, LineChart, Eye, User, Settings, LogOut } from "lucide-react";
+import { Bell, Search, ArrowRight, Info, LineChart, Eye, User, Settings, LogOut, Filter } from "lucide-react";
 import { Line, LineChart as RechartsLineChart, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
+import FilterButton from "../components/FilterButton";
 
 const Index = () => {
   // Sample chart data
@@ -154,6 +154,11 @@ const Index = () => {
 
         {/* Main Content */}
         <div className="p-8">
+          {/* Add Filter Button */}
+          <div className="mb-6">
+            <FilterButton />
+          </div>
+
           {/* Member Status Card */}
           <div className="bg-white rounded-lg p-6 mb-6">
             <div className="flex justify-between items-start">
