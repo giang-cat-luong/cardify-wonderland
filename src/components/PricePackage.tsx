@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 
 interface PackageInfo {
   price: string;
@@ -50,7 +50,7 @@ const PricePackage = () => {
           {packages[selectedPackage].description}
         </p>
         <Link
-          href=""
+          to=""
           className="text-[#1a73e8] mt-2 font-semibold text-[0.875rem] cursor-pointer font-sans block"
         >
           ดูข้อมูลแพ็กเกจ
