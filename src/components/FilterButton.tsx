@@ -1,7 +1,8 @@
 
 import { Filter } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import FilterSidebar from "./FilterSidebar";
+import useClickOutside from "../hooks/useClickOutside";
 
 interface FilterButtonProps {
   className?: string;
@@ -9,13 +10,14 @@ interface FilterButtonProps {
 
 const FilterButton = ({ className = "" }: FilterButtonProps) => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const buttonRef = useRef<HTMLDivElement>(null);
 
   const toggleFilter = () => {
     setIsFilterOpen(!isFilterOpen);
   };
 
   return (
-    <>
+    <div ref={buttonRef}>
       <button
         className={`flex items-center gap-2 px-4 py-2 rounded-md border border-gray-300 hover:bg-gray-50 ${className}`}
         onClick={toggleFilter}
@@ -28,7 +30,7 @@ const FilterButton = ({ className = "" }: FilterButtonProps) => {
         isOpen={isFilterOpen} 
         onClose={() => setIsFilterOpen(false)} 
       />
-    </>
+    </div>
   );
 };
 

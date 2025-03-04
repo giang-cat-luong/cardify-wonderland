@@ -1,6 +1,7 @@
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { ArrowUpDown } from "lucide-react";
+import useClickOutside from "../hooks/useClickOutside";
 
 interface SortDropdownProps {
   className?: string;
@@ -10,6 +11,9 @@ const SortDropdown = ({ className = "" }: SortDropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState("recommend");
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Use our custom hook instead of the inline useEffect
+  useClickOutside(dropdownRef, () => setIsOpen(false));
 
   const sortOptions = [
     { value: "recommend", label: "recommend" },
@@ -29,20 +33,6 @@ const SortDropdown = ({ className = "" }: SortDropdownProps) => {
     console.log(`Sort by: ${value}`);
     // Here you would add the logic to actually sort the data
   };
-
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
 
   return (
     <div ref={dropdownRef} className={`relative ${className}`}>
