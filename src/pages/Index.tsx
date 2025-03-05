@@ -4,6 +4,8 @@ import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import FilterButton from "../components/FilterButton";
 import SortDropdown from "../components/SortDropdown";
+import NotificationDropdown from "../components/NotificationDropdown";
+import useClickOutside from "../hooks/useClickOutside";
 
 const Index = () => {
   // Sample chart data
@@ -27,19 +29,8 @@ const Index = () => {
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const profileMenuRef = useRef<HTMLDivElement>(null);
 
-  // Close the menu when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (profileMenuRef.current && !profileMenuRef.current.contains(event.target as Node)) {
-        setIsProfileMenuOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
+  // Use our custom hook for handling clicks outside the profile menu
+  useClickOutside(profileMenuRef, () => setIsProfileMenuOpen(false), isProfileMenuOpen);
 
   const toggleProfileMenu = () => {
     setIsProfileMenuOpen(!isProfileMenuOpen);
@@ -110,15 +101,8 @@ const Index = () => {
                 </div>
               </div>
               
-              {/* Bell button with Tailwind tooltip */}
-              <div className="relative group">
-                <button className="p-2 hover:bg-gray-100 rounded-full">
-                  <Bell className="w-5 h-5 text-gray-600" />
-                </button>
-                <div className="absolute z-10 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-opacity duration-300 bottom-full mb-1 left-1/2 transform -translate-x-1/2 px-2 py-1 bg-gray-800 text-white text-xs rounded whitespace-nowrap">
-                  Thông báo
-                </div>
-              </div>
+              {/* Replace Bell button with NotificationDropdown */}
+              <NotificationDropdown />
               
               {/* Profile Menu */}
               <div className="relative" ref={profileMenuRef}>
